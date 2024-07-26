@@ -9,7 +9,21 @@
 <body>
     <h1>Users</h1>
 
-    <form action="POST" enctype="multipart/form-data" action="" name="">
+    @session('success')
+       <p> {!! $value !!} </p>
+    @endsession
+
+    @session('erro')
+       <p style="color: #f00;"> {!! $value !!} </p>
+    @endsession
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <p style="color: #f00;">{{ $error }}</p>
+        @endforeach   
+    @endif
+
+    <form enctype="multipart/form-data" method="POST" action="{{ route('user.import') }}" name="">
         @csrf
         <input type="file" name="file" id="file" accept=".csv">
         <button type="submit">Importar</button>
